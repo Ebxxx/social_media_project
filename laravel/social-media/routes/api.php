@@ -21,8 +21,10 @@ Route::get('/posts', [PostController::class, 'index']);
 // Create a new post
 Route::post('/posts', [PostController::class, 'store']);
 
-// Like a post
-Route::post('/posts/{post}/like', [PostController::class, 'like']);
+// // Like a post
+// Route::post('/posts/{post}/like', [PostController::class, 'like']);
+// like/unlike  a post
+Route::post('/posts/{post}/like', [PostController::class, 'toggleLike']);
 
 // Add a comment to a post
 Route::post('/posts/{post}/comments', [PostController::class, 'addComment']);

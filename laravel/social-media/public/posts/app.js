@@ -24,15 +24,37 @@ angular.module('socialMediaApp', [])
                 });
         };
 
-        // Like a post
-        $scope.likePost = function(post) {
+        // Toggle like/unlike for a post
+        $scope.toggleLike = function(post) {
             $http.post('/api/posts/' + post.id + '/like')
-                .then(function(response) {
-                    post.like_count++;
-                }, function(error) {
-                    alert('Error liking post: ' + error.data.message);
-                });
+            .then(function(response) {
+                post.liked = response.data.liked; // Update the liked status
+                post.likes_count = response.data.like_count; // Update the likes count
+            }, function(error) {
+                alert('Error toggling like');
+            });
         };
+         
+        // // Toggle like/unlike for a post
+        // $scope.toggleLike = function(post) {
+        //     $http.post('/api/posts/' + post.id + '/like')
+        //     .then(function(response) {
+        //         post.liked = response.data.liked; // Update the liked status
+        //        post.likes_count += post.liked ? 1 : -1; // Adjust like count based on like/unlike
+        //     }, function(error) {
+        //         alert('Error toggling like');
+        //     });
+        // };
+        
+        // // Like a post
+        // $scope.likePost = function(post) {
+        //     $http.post('/api/posts/' + post.id + '/like')
+        //         .then(function(response) {
+        //             post.like_count++;
+        //         }, function(error) {
+        //             alert('Error liking post: ' + error.data.message);
+        //         });
+        // };
         
 
         // Add a comment to a post
@@ -46,6 +68,11 @@ angular.module('socialMediaApp', [])
                 });
         };
 
+        // // Initialize by fetching posts
+        // angular.module('socialMediaApp').run(function($http) {
+        //     $http.defaults.headers.common['X-CSRF-TOKEN'] = 'your_csrf_token_here';
+        // });
+        // $scope.getPosts();
         // Initialize by fetching posts
         $scope.getPosts();
     });

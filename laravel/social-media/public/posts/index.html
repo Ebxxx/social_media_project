@@ -22,7 +22,10 @@
         <li ng-repeat="post in posts" class="list-group-item">
             <p>{{ post.content }}</p>
             <small>By {{ post.user.name }} on {{ post.created_at | date:'medium' }}</small>
-            <button ng-click="likePost(post)">Like({{ post.like_count }})</button>
+            <!-- <button ng-click="likePost(post)">Like({{ post.like_count }})</button> -->
+            <button ng-click="toggleLike(post)">
+                {{ post.liked ? 'Unlike' : 'Like' }} ({{ post.likes_count }})
+            </button>
 
             <!-- Comment Form -->
             <form ng-submit="addComment(post)">

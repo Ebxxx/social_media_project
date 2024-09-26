@@ -24,7 +24,6 @@
 // Route::get('/posts/index', [PostController::class, 'create'])->name('posts.create');
 
 
-
 // // Profile routes
 // Route::middleware(['auth'])->group(function () {
 //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -33,6 +32,39 @@
 
 // // Include routes for authentication
 // require __DIR__.'/auth.php';
+// use Illuminate\Support\Facades\Route;
+// use App\Http\Controllers\PostController;
+// use App\Http\Controllers\ProfileController;
+// use App\Http\Controllers\DashboardController;
+// use Illuminate\Support\Facades\Auth;
+
+// // Route for the home page
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+// // Route for the dashboard, using DashboardController
+// Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
+
+// // Post routes (view, create, and store)
+// Route::middleware('auth')->group(function () {
+//     Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+//     Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+//     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+
+//     //Profile routes
+//     Route::middleware(['auth'])->group(function () {
+//         Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+//         Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     });
+    
+//     Route::get('/profile', function () {
+// })->middleware(['auth'])->name('profile');
+// });
+
+// // Include routes for authentication
+// require __DIR__.'/auth.php';
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -53,14 +85,25 @@ Route::middleware('auth')->group(function () {
     Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 
-    // Profile routes
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    // // Profile routes
+    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    // Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    // // //user profile edit 
+    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/profile', function () {
-    return view('profile', compact('posts'));
-})->middleware(['auth'])->name('profile');
+    // Profile routes
+        // Profile edit and update routes
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        
+        // Use either PUT or PATCH, not both
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::post('/profile/upload', [ProfileController::class, 'upload'])->name('profile.upload');
+        // Route for deleting the profile
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
 });
 
 // Include routes for authentication
 require __DIR__.'/auth.php';
+
